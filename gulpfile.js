@@ -27,6 +27,10 @@ gulp.task('copy-files', () => {
 		.pipe(gulp.dest(config.resources.files.dest))
 })
 
+gulp.task('setup', ['js:server', 'copy-files'], () => {
+	console.log('Setup complete. Run `npm start` to start server.')
+})
+
 gulp.task('default', ['js:server', 'copy-files'], () => {
 	gulp.watch(config.js.server.src, ['js:server'])
 })
