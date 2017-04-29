@@ -2,7 +2,7 @@
   "name": "super-waffle",
   "version": "1.0.0",
   "description": "Shapeshift.io challenge accepted",
-  "main": "app/server/index.js",
+  "main": "dist/server/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/morgansliman/super-waffle.git"
@@ -14,10 +14,14 @@
   },
   "homepage": "https://github.com/morgansliman/super-waffle#readme",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-env": "^1.4.0"
+    "babel-preset-env": "^1.4.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.0"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "request": "^2.81.0"
   }
