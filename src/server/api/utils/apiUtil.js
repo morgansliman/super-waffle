@@ -53,7 +53,7 @@ const BTCE = {
       if (data.error) throw new Error(data.error)
       // only key should be the coinPair
       let keys = Object.keys(data)
-      return 1 / +data[keys[0]].low
+      return 1 / +data[keys[0]].sell
     })
   }
 }
@@ -61,7 +61,6 @@ const BTCE = {
 // Poloniex API handler
 const POLONIEX = {
   getRate: async (coin1, coin2, amount) => {
-    // else...
     return request({
       url: 'https://poloniex.com/public?command=returnTicker',
       json: true
@@ -69,7 +68,7 @@ const POLONIEX = {
       if (data.error) throw new Error(data.error)
 
       // necessary step because of Poloniex API structure
-      // example: accepts 'eth_btc' but not 'btc_eth'
+      // example: accepts 'ETH_BTC' but not 'BTC_ETH'
       let coinPair = `${coin1.toUpperCase()}_${coin2.toUpperCase()}`
       let pairCoin = `${coin2.toUpperCase()}_${coin1.toUpperCase()}`
 
@@ -80,10 +79,36 @@ const POLONIEX = {
   }
 }
 
+// Bittrex API handler
+const BITTREX = {
+  getRate: async (coin1, coin2, amount) => {
+    return request({
+      url: 'https://bittrex.com/api/v1.1/public/getmarketsummaries',
+      json: true
+    }).then((data) => {
+      if (data.success === false) throw new Error(data.message)
+
+      // necessary step because of Bittrex API structure
+      // example: accepts 'BTC-ETH' but not 'ETH-BTC'
+      let coinPair = `${coin1.toUpperCase()}-${coin2.toUpperCase()}`
+      let pairCoin = `${coin2.toUpperCase()}-${coin1.toUpperCase()}`
+
+      // https://jsperf.com/for-vs-foreach/75
+      for (let i = 0; i < data.result.length; i++) {
+        if (data.result[i].MarketName === coinPair || data.result[i].MarketName === pairCoin) {
+          return 1 / +data.result[i].Ask
+        }
+      }
+      return null
+    })
+  }
+}
+
 async function getRates (coin1, coin2, amount) {
   let rates = {
     'BTC-e': await BTCE.getRate(coin1, coin2, amount),
-    'Poloniex': await POLONIEX.getRate(coin1, coin2, amount)
+    'Poloniex': await POLONIEX.getRate(coin1, coin2, amount),
+    'Bittrex': await BITTREX.getRate(coin1, coin2, amount)
   }
 
   // filter out all incompatible exchanges (null value)
