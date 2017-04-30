@@ -16,6 +16,8 @@ app.use(bodyParser.text())
 app.use(bodyParser.json({ type: "application/vnd.api+json" }))
 
 /*** Routing ***/
+// Rates API
+require('./routes/api/rates')(app)
 
 //  Todo
 

@@ -1,32 +1,33 @@
 {
-	"name":            "super-waffle",
-	"version":         "1.0.0",
-	"description":     "Shapeshift.io challenge accepted",
-	"main":            "dist/server/index.js",
-	"repository":      {
-		"type": "git",
-		"url":  "git+https://github.com/morgansliman/super-waffle.git"
-	},
-	"author":          "",
-	"license":         "ISC",
-	"bugs":            {
-		"url": "https://github.com/morgansliman/super-waffle/issues"
-	},
-	"homepage":        "https://github.com/morgansliman/super-waffle#readme",
-	"devDependencies": {
-		"babel-preset-env": "^1.4.0",
-		"gulp":             "^3.9.1",
-		"gulp-babel":       "^6.1.2",
-		"gulp-concat":      "^2.6.1",
-		"gulp-sourcemaps":  "^2.6.0"
-	},
-	"dependencies":    {
-		"body-parser": "^1.17.1",
-		"express":     "^4.15.2",
-		"request":     "^2.81.0"
-	},
-	"scripts":         {
-		"postinstall": "gulp setup",
-		"start": "gulp setup && sudo node dist/server/index.js"
-	}
+  "name": "super-waffle",
+  "version": "1.0.0",
+  "description": "Shapeshift.io challenge accepted",
+  "main": "src/server/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morgansliman/super-waffle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/morgansliman/super-waffle/issues"
+  },
+  "homepage": "https://github.com/morgansliman/super-waffle#readme",
+  "devDependencies": {
+    "babel-preset-env": "^1.4.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.3"
+  },
+  "scripts": {
+    "postinstall": "gulp setup",
+    "start": "gulp setup && sudo node src/server/index.js"
+  }
 }
