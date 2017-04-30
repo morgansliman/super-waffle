@@ -1,10 +1,9 @@
 const request = require('request-promise-native')
-// todo: document /api/rate
 
-// Will store valid pairs from BTCE /info endpoint
+// BTC-e API handler
 const BTCE = {
-  pairs:              [],
-  updated:            null,
+  pairs:              [], // will store valid pairs from BTCE /info endpoint
+  updated:            null, // last time BTCE.pairs was updated
   _refreshValidPairs: () => { // returns Promise
     return request({
       url:  'https://btc-e.com/api/3/info',
@@ -53,32 +52,19 @@ const BTCE = {
   }
 }
 
-// todo: attribute rates to respective exchange
 async function getRates(coin1, coin2, amount) {
-  let btceRate = BTCE.getRate(coin1, coin2, amount)
-  // let poloniexRate
-  // let bittnexRate
+  let rates = {
+    "BTC-e": await BTCE.getRate(coin1, coin2, amount)
+  }
 
   // filter out all incompatible exchanges (null value)
-  return [await btceRate].filter(el => el)
+  for (let rate in rates) {
+    if (rates[rate] === null) delete rates[rate]
+  }
+
+  return rates
 }
 
-module.exports = (app) => {
-  app.post('/api/rate', (req, res) => {
-    // Request should be sent in format:
-    // { coin1: 'btc*', coin2: 'eth*', amount: 20 } (* => case insensitive)
-    let coin1  = req.body.coin1.length === 3 ? req.body.coin1 : undefined
-    let coin2  = req.body.coin2.length === 3 ? req.body.coin2 : undefined
-    let amount = Number.isNaN(req.body.amount) === false
-      ? +req.body.amount
-      : undefined
-
-    // Validate request parameters
-    if (!coin1 || !coin2 || !amount) return res.status(400).end()
-
-    // Get rates (only returns rates from exchanges compatible with given coin pair)
-    getRates(coin1, coin2, amount).then((rates) => {
-      res.send(rates)
-    })
-  })
+module.exports = {
+  getRates: getRates
 }
