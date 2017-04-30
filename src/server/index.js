@@ -7,15 +7,15 @@ const app = express()
 const PORT = 80
 
 //  Static directory
-app.use(express.static(path.join(__dirname + '/../client')))
+app.use(express.static(path.join(__dirname, '/../client')))
 
 //  Handle data parsing
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.text())
-app.use(bodyParser.json({ type: "application/vnd.api+json" }))
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 
-/*** Routing ***/
+/** * Routing ***/
 // Rates API
 require('./api/routes/rates')(app)
 
@@ -23,5 +23,5 @@ require('./api/routes/rates')(app)
 
 //  Start server
 app.listen(PORT, () => {
-	console.log(`App listening on port: ${PORT}`)
+  console.log(`App listening on port: ${PORT}`)
 })

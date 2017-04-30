@@ -5,8 +5,8 @@ module.exports = (app) => {
   app.post('/api/rate', (req, res) => {
     // Request should be sent in format:
     // { coin1: 'btc*', coin2: 'eth*', amount: 20 } (* => case insensitive)
-    let coin1  = req.body.coin1.length === 3 ? req.body.coin1 : undefined
-    let coin2  = req.body.coin2.length === 3 ? req.body.coin2 : undefined
+    let coin1 = req.body.coin1.length === 3 ? req.body.coin1 : undefined
+    let coin2 = req.body.coin2.length === 3 ? req.body.coin2 : undefined
     let amount = Number.isNaN(req.body.amount) === false
       ? +req.body.amount
       : undefined
