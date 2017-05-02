@@ -33,8 +33,8 @@
     "request-promise-native": "^1.0.3"
   },
   "scripts": {
-    "postinstall": "gulp setup",
+    "postinstall": "cd src/client && npm install && bower install && cd ../.. && sudo node src/server/index.js",
     "start": "gulp setup && sudo node src/server/index.js",
-    "standard": "standard --fix"
+    "test": "standard --fix"
   }
 }
