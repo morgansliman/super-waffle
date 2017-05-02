@@ -3,7 +3,7 @@
 
 ### Index
 - [API Documentation](https://github.com/morgansliman/super-waffle#api-documentation)
-- [Picture explaining this ridiculous repo name][super waffle image]
+- [Picture explaining this ridiculous repo name](https://github.com/morgansliman/super-waffle#github-has-spoken)
 
 ## API Documentation
 
@@ -63,4 +63,5 @@ Success Output:
     an empty object {} will be returned
 ```
 
+### Github has spoken
 ![super waffle image](github-has-spoken.png)
