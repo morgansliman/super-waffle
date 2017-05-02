@@ -1,11 +1,28 @@
 # super-waffle
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-### Index
+## Index
+- [Local Installation Instructions](#installing-locally)
 - [API Documentation](#api-documentation)
 - [Picture explaining this ridiculous repo name](#github-has-spoken)
 
-## API Documentation
+### Installing Locally
+
+First ensure that you have NodeJS and NPM installed:
+
+> `$ node --version`
+>
+> `$ npm --version`
+
+It's very important that you have Node version >=7.9.0 installed 
+as some ES2017 features such as `async/await` will not work in older versions
+
+Steps to run the site locally:
+- `git clone https://github.com/morgansliman/super-waffle`
+- `npm install`
+- That's it! Open any web browser to `localhost`
+
+### API Documentation
 
 For any of the api calls if there is a problem the error message will be returned as the following JSON:
 ```
