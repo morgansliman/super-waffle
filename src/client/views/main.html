@@ -1,0 +1,53 @@
+<div class="animated fadeIn" ng-controller="formCtrl">
+	<div class="row">
+		<div class="col-md-10 offset-md-1">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-edit"></i> Rate Checker
+					<div class="card-actions">
+						<a href="https://github.com/morgansliman/super-waffle">
+							<small class="text-muted">docs</small>
+						</a>
+					</div>
+				</div>
+				<div class="card-block">
+					<form class="form-inline">
+
+						<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+							<div class="input-group-addon"><i class="cc {{coin1.split(' - ')[1]}}"></i></div>
+							<input type="text" class="form-control" id="inlineFormInputGroup" ng-model="coin1" disabled>
+						</div>
+
+						<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+							<select name="selectCoin2" id="selectCoin2"
+							        ng-options="option for option in coinList"
+							        ng-model="coin2"></select>
+						</div>
+
+						<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+							<input type="number" class="form-control" ng-model="amount" placeholder="Amount to convert...">
+						</div>
+
+						<button type="button" class="btn btn-primary" ng-click="getRate(coin1, coin2, amount)">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="card col-md-4" ng-repeat="trade in trades">
+			<div class="card-block">
+				<h4 class="card-title">Trade {{$index + 1}}:</h4>
+				<h6 class="card-subtitle mb-2 text-muted">{{trade.unit1}} => {{trade.unit2}}</h6>
+				<div class="col" ng-repeat="(market, result) in trade.marketResults">
+					<div class="callout callout-info text-truncate float-left" ng-style="trade.bestRate[market]">
+						<small class="text-muted"><b>{{market}}</b></small><br>
+						<strong class="h4 text-truncate">{{result | limitTo:8}}... <small>{{trade.coin1}}/{{trade.coin2}}</small></strong><br>
+						<small ng-if="trade.bestRate[market]">{{trade.amount}} {{trade.coin1}} => {{+result * +trade.amount}} {{trade.coin2}}</small>
+						<small ng-if="!trade.bestRate[market]">-{{(+trade.amount * +trade.highest) - (+trade.amount * result)}} {{trade.coin2}}</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
