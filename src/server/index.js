@@ -19,8 +19,6 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 // Rates API
 require('./api/routes/rates')(app)
 
-//  Todo
-
 //  Start server
 app.listen(PORT, () => {
   console.log(`App listening on port: ${PORT}`)

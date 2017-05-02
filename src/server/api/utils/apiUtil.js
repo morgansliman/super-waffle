@@ -8,6 +8,8 @@ const BTCE = {
     return request({
       url: 'https://btc-e.com/api/3/info',
       json: true
+    }).catch((err) => {
+      throw err
     }).then((data) => {
       if (data.error) throw new Error(data.error)
       let pairs = []
@@ -37,23 +39,26 @@ const BTCE = {
     // weed out the bad pair(s)
     if (BTCE.pairs.includes(coinPair) === false) coinPair = null
     if (BTCE.pairs.includes(pairCoin) === false) pairCoin = null
-    if (coinPair === null && pairCoin === null) return null
+    if (coinPair === null && pairCoin === null) return [null]
 
-    // finally, construct/return query string
-    return `https://btc-e.com/api/3/ticker/${coinPair || pairCoin}`
+    // finally, construct/return query string ( index 0 ) and indicator for which pair was valid ( index 1 )
+    return [`https://btc-e.com/api/3/ticker/${coinPair || pairCoin}`, (coinPair ? 0 : 1)]
   },
   getRate: async (coin1, coin2, amount) => {
-    let query = await BTCE._getQueryString(coin1, coin2, amount)
+    let [query, rateMath] = await BTCE._getQueryString(coin1, coin2, amount)
     if (query === null) return null
     // else...
     return request({
       url: query,
       json: true
+    }).catch((err) => {
+      throw err
     }).then((data) => {
       if (data.error) throw new Error(data.error)
       // only key should be the coinPair
       let keys = Object.keys(data)
-      return 1 / +data[keys[0]].sell
+      // convert the rate into one that can easily be multiplied by `amount`
+      return rateMath ? (1 / +data[keys[0]].sell) : data[keys[0]].sell
     })
   }
 }
@@ -64,6 +69,8 @@ const POLONIEX = {
     return request({
       url: 'https://poloniex.com/public?command=returnTicker',
       json: true
+    }).catch((err) => {
+      throw err
     }).then((data) => {
       if (data.error) throw new Error(data.error)
 
@@ -73,7 +80,7 @@ const POLONIEX = {
       let pairCoin = `${coin2.toUpperCase()}_${coin1.toUpperCase()}`
 
       if (data.hasOwnProperty(coinPair) && +data[coinPair].isFrozen === 0) return (1 / +data[coinPair].lowestAsk)
-      if (data.hasOwnProperty(pairCoin) && +data[pairCoin].isFrozen === 0) return (1 / +data[pairCoin].lowestAsk)
+      if (data.hasOwnProperty(pairCoin) && +data[pairCoin].isFrozen === 0) return data[pairCoin].lowestAsk
       return null
     })
   }
@@ -85,6 +92,8 @@ const BITTREX = {
     return request({
       url: 'https://bittrex.com/api/v1.1/public/getmarketsummaries',
       json: true
+    }).catch((err) => {
+      throw err
     }).then((data) => {
       if (data.success === false) throw new Error(data.message)
 
@@ -95,9 +104,9 @@ const BITTREX = {
 
       // https://jsperf.com/for-vs-foreach/75
       for (let i = 0; i < data.result.length; i++) {
-        if (data.result[i].MarketName === coinPair || data.result[i].MarketName === pairCoin) {
-          return 1 / +data.result[i].Ask
-        }
+        let mktName = data.result[i].MarketName
+        if (mktName === coinPair) return 1 / +data.result[i].Ask
+        if (mktName === pairCoin) return data.result[i].Ask
       }
       return null
     })
