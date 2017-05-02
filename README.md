@@ -8,11 +8,11 @@
 ## API Documentation
 
 For any of the api calls if there is a problem the error message will be returned as the following JSON:
-```json
+```
 { "error": [error_message] }
 ```
 
-```javascript
+```
 url: /api/v1/rate
 method: POST
 data:
