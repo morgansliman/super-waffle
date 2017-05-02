@@ -2,8 +2,8 @@
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ### Index
-- [API Documentation](https://github.com/morgansliman/super-waffle#api-documentation)
-- [Picture explaining this ridiculous repo name](https://github.com/morgansliman/super-waffle#github-has-spoken)
+- [API Documentation](#api-documentation)
+- [Picture explaining this ridiculous repo name](#github-has-spoken)
 
 ## API Documentation
 
