@@ -1,7 +1,7 @@
 # super-waffle - Shapeshift Coding Challenge
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-[Live demo](shapeshift.morgansliman.com)
+[Live demo](https://shapeshift.morgansliman.com)
 
 ## Index
 - [Local Installation Instructions](#installing-locally)
