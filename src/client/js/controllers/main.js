@@ -81,7 +81,7 @@ function formCtrl ($scope, $http) {
   function getRate (coin1, coin2, amount) {
     $http({
       method: 'POST',
-      url: 'http://localhost:80/api/rate',
+      url: '/api/rate',
       data: {
         'coin1': coin1.split(' - ')[1],
         'coin2': coin2.split(' - ')[1],
