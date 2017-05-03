@@ -1,6 +1,8 @@
 # super-waffle - Shapeshift Coding Challenge
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
+[Live demo](shapeshift.morgansliman.com)
+
 ## Index
 - [Local Installation Instructions](#installing-locally)
 - [API Documentation](#api-documentation)
@@ -20,9 +22,14 @@ It's very important that you have Node version >=7.9.0 installed
 as some ES2017 features such as `async/await` will not work in older versions
 
 Steps to run the site locally:
-- `git clone https://github.com/morgansliman/super-waffle`
+- `git clone https://github.com/morgansliman/super-waffle && cd super-waffle`
 - `npm install`
+- `cd src/client`
+- `npm install && bower install`
+- `cd ../.. && sudo node src/server/index.html`
 - That's it! Open any web browser to `localhost`
+
+*or*... click the link [up here](#super-waffle-shapeshift-coding-challenge) to see my live demo
 
 ### API Documentation
 
