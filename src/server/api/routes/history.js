@@ -1,6 +1,14 @@
 const apiUtil = require('../utils/apiUtil')
 
 module.exports = (app) => {
+  // fix CORS
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials')
+    res.header('Access-Control-Allow-Credentials', 'true')
+    next()
+  })
   // Returns the USD price per coin history for given timeframe and coin
   app.get('/api/v1/history/:timeframe?/:coin?', (req, res) => {
     let validTimeframes = ['1day', '7day', '30day', '90day', '180day', '365day']
