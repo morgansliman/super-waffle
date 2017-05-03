@@ -13,6 +13,7 @@ angular
 .controller('horizontalBarsType2Ctrl', horizontalBarsType2Ctrl)
 .controller('usersTableCtrl', usersTableCtrl)
 .controller('formCtrl', formCtrl)
+  .controller('historyCtrl', historyCtrl)
 
 // convert Hex to RGBA
 function convertHex (hex, opacity) {
@@ -23,6 +24,49 @@ function convertHex (hex, opacity) {
 
   result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')'
   return result
+}
+
+historyCtrl.$inject = ['$scope', '$http']
+function historyCtrl ($scope, $http) {
+  $scope.dayHistory = {}
+  $scope.weekHistory = {}
+  $scope.monthHistory = {}
+  $scope.threeMonthHistory = {}
+  $scope.sixMonthHistory = {}
+  $scope.yearHistory = {}
+  $http({
+    method: 'GET',
+    url: '/api/v1/history/1day' // default history is 1day
+  }).catch(function (err) {
+    throw err
+  }).then(function (data) {
+    var oldest = 0
+    var newest = 0
+    for (var key in data.data) {
+      var older = data.data[key][0][0]
+      var newer = data.data[key][data.data[key].length - 1][0]
+      if (older < oldest || oldest === 0) {
+        oldest = older
+      }
+      if (newer > newest || newest === 0) {
+        newest = newer
+      }
+    }
+    var oldDate = (new Date(oldest)).getFullYear()
+    var newDate = (new Date(newest)).getFullYear()
+    $scope.labels = [oldDate, newDate]
+    $scope.options = {
+      scales: {
+        xAxes: [{
+          display: false
+        }]
+      }
+    }
+    $scope.series = Object.keys(data.data)
+    $scope.dayHistory = data.data // overwrite on state load
+    console.log('Past 24hr history:')
+    console.log($scope.dayHistory)
+  })
 }
 
 formCtrl.$inject = ['$scope', '$http']

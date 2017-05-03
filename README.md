@@ -4,6 +4,8 @@
 ## Index
 - [Local Installation Instructions](#installing-locally)
 - [API Documentation](#api-documentation)
+    - [Market Rates for Coin Pairs](#market-rates-for-coin-pairs)
+    - [Coin Price History](#coin-price-history)
 - [Picture explaining this ridiculous repo name](#github-has-spoken)
 
 ### Installing Locally
@@ -28,6 +30,8 @@ For any of the api calls if there is a problem the error message will be returne
 ```
 { "error": [error_message] }
 ```
+
+#### Market Rates for Coin Pairs
 
 ```
 url: /api/v1/rate
@@ -78,6 +82,51 @@ Success Output:
 
     In the event that no markets support the given coin pair,
     an empty object {} will be returned
+```
+
+#### Coin Price History
+
+```
+url: /api/v1/history/[timeframe]/[coin]
+method: GET
+
+    Timeframes supported
+
+    * /history/1day/
+    * /history/7day/
+    * /history/30day/
+    * /history/90day/
+    * /history/180day/
+    * /history/365day/
+
+    [coin] is a coin short name (i.e. "btc")
+
+    Currently supported coins are:
+
+        BTC, LTC, ETH, DASH
+
+Success Output:
+
+    {
+        "BTC": [
+            [
+                *date in seconds from epoch*,
+                *price in USD*
+            ],
+            [
+                ...,
+                ...
+            ],
+            ...
+        ]
+    }
+
+    Timeframe is optional
+    /history/:coin will return all data
+
+    Coin is also optional
+    /history/:timeframe will return data for all supported coins from given timeframe
+    /history/ will return all data for all supported coins
 ```
 
 ### Github has spoken

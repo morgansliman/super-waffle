@@ -128,6 +128,59 @@ async function getRates (coin1, coin2, amount) {
   return rates
 }
 
+async function getHistory (timeframe) {
+  async function btc () {
+    return request({
+      url: `http://www.coincap.io/history/${timeframe ? timeframe + '/' : ''}BTC`,
+      json: true
+    }).catch((err) => {
+      throw err
+    }).then((data) => {
+      return data.price
+    })
+  }
+
+  async function eth () {
+    return request({
+      url: `http://www.coincap.io/history/${timeframe ? timeframe + '/' : ''}ETH`,
+      json: true
+    }).catch((err) => {
+      throw err
+    }).then((data) => {
+      return data.price
+    })
+  }
+
+  async function ltc () {
+    return request({
+      url: `http://www.coincap.io/history/${timeframe ? timeframe + '/' : ''}LTC`,
+      json: true
+    }).catch((err) => {
+      throw err
+    }).then((data) => {
+      return data.price
+    })
+  }
+
+  async function dash () {
+    return request({
+      url: `http://www.coincap.io/history/${timeframe ? timeframe + '/' : ''}DASH`,
+      json: true
+    }).catch((err) => {
+      throw err
+    }).then((data) => {
+      return data.price
+    })
+  }
+  return {
+    'BTC': await btc(),
+    'ETH': await eth(),
+    'LTC': await ltc(),
+    'DASH': await dash()
+  }
+}
+
 module.exports = {
-  getRates: getRates
+  getRates: getRates,
+  getHistory: getHistory
 }

@@ -18,6 +18,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 /** * Routing ***/
 // Rates API
 require('./api/routes/rates')(app)
+require('./api/routes/history')(app)
 
 //  Start server
 app.listen(PORT, () => {
