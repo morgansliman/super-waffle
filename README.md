@@ -1,4 +1,4 @@
-# super-waffle
+# super-waffle - Shapeshift Coding Challenge
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ## Index
